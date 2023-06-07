@@ -44,11 +44,13 @@ resource "databricks_cluster" "single" {
 }
 
 resource "databricks_git_credential" "github" {
+  depends_on = [ azurerm_databricks_workspace.adb-ws ]
   git_username          = "ghoshabhik"
   git_provider          = "github"
   personal_access_token = var.personal_access_token
 }
 
 resource "databricks_repo" "databricks_repos" {
+  depends_on = [ azurerm_databricks_workspace.adb-ws ]
   url = "https://github.com/ghoshabhik/azure-terraform-resources.git"
 }
