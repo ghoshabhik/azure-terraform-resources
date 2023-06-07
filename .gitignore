@@ -1,0 +1,4 @@
+personal.tfvar
+.terraform
+terraform.tfstate.backup
+*.hcl
