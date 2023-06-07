@@ -16,24 +16,24 @@ data "databricks_spark_version" "latest_lts" {
     long_term_support = true
 }
 
-resource "databricks_instance_pool" "tf-pool" {
-  instance_pool_name = "tfnodepool${random_integer.ri.result}"
-  min_idle_instances = 0
-  max_capacity = 2
-  node_type_id = data.databricks_node_type.smallest.id
-  idle_instance_autotermination_minutes = 10
-}
+# resource "databricks_instance_pool" "tf-pool" {
+#   instance_pool_name = "tfnodepool${random_integer.ri.result}"
+#   min_idle_instances = 0
+#   max_capacity = 2
+#   node_type_id = data.databricks_node_type.smallest.id
+#   idle_instance_autotermination_minutes = 10
+# }
 
-resource "databricks_cluster" "shared_autoscaling" {
+resource "databricks_cluster" "single" {
   depends_on = [ azurerm_databricks_workspace.adb-ws ]
+  
   cluster_name = "tf cluster"
   spark_version = data.databricks_spark_version.latest_lts.id   
-#   node_type_id = data.databricks_node_type.smallest.id
-  instance_pool_id = databricks_instance_pool.tf-pool.id
+  node_type_id = data.databricks_node_type.smallest.id
   autotermination_minutes = 10
   autoscale {
     min_workers = 1
-    max_workers = 2
+    max_workers = 1
   }
   spark_conf = {
     "spark.databricks.io.cache.enabled": true
