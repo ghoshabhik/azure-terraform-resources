@@ -10,3 +10,7 @@ variable "tenant_id" {
 variable "subscription_id" {
   type = string
 }
+variable "personal_access_token" {
+  type = string
+}
+

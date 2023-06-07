@@ -42,3 +42,13 @@ resource "databricks_cluster" "single" {
     "createdby": "terraform"
   }
 }
+
+resource "databricks_git_credential" "github" {
+  git_username          = "ghoshabhik"
+  git_provider          = "github"
+  personal_access_token = var.personal_access_token
+}
+
+resource "databricks_repo" "databricks_repos" {
+  url = "https://github.com/ghoshabhik/azure-terraform-resources.git"
+}
