@@ -36,7 +36,7 @@ resource "databricks_instance_pool" "tf-pool" {
 resource "databricks_cluster" "shared_autoscaling" {
   depends_on = [ azurerm_databricks_workspace.adb-ws ]
   cluster_name = "tf cluster"
-  spark_version = data.databricks_spark_version.latest_lts.id
+  spark_version = data.databricks_spark_version.latest_lts.id   
   node_type_id = data.databricks_node_type.smallest.id
   instance_pool_id = databricks_instance_pool.tf-pool.id
   autotermination_minutes = 10
